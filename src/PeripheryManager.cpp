@@ -311,7 +311,7 @@ bool PeripheryManager_::parseSound(const char *json)
 
 const char *PeripheryManager_::playRTTTLString(String rtttl)
 {
-    if (!DFPLAYER_ACTIVE && SOUND_ACTIVE)
+    if (!DFPLAYER_ACTIVE && SOUND_ACTIVE && !MATRIX_OFF)
     {
         static char melodyName[64];
         Melody melody = MelodyFactory.loadRtttlString(rtttl.c_str());
@@ -326,6 +326,9 @@ const char *PeripheryManager_::playRTTTLString(String rtttl)
 const char *PeripheryManager_::playFromFile(String file)
 {
     if (!SOUND_ACTIVE)
+        return "";
+
+    if (MATRIX_OFF)
         return "";
 
     if (DFPLAYER_ACTIVE)
